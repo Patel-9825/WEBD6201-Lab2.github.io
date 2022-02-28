@@ -418,6 +418,14 @@
         }
     }
 
+    /**
+     * This method validates an input text field in the form and displays
+     * an error in the message area in the field
+     *
+     * @param {string} input_field
+     * @param {RegExp} regular_expression_register
+     * @param {string} error_message_register
+     */
     function ValidateRegisterField(input_field, regular_expression_register, error_message_register)
     {
         let ErrorMessage = $("#ErrorMessage");
@@ -441,8 +449,8 @@
 
     function RegisterFormValidation()
     {
-        ValidateRegisterField("FirstName", /^([A-Z][a-z]{1,25})+(\s|,|-)*$/, "Please enter a valid First Name. It should follow with capitalized first character of your first name.");
-        ValidateRegisterField("lastName", /^([A-Z][a-z]{1,25})+(\s|,|-)*$/, "Please enter a valid Last Name. It should follow with capitalized first character of your last name.");
+        ValidateRegisterField("firstName", /^([A-Z][a-z]{2,})+(\s|,|-)*$/, "Please enter a valid First Name. It should follow with capitalized first character of your first name.");
+        ValidateRegisterField("lastName", /^([A-Z][a-z]{2,})+(\s|,|-)*$/, "Please enter a valid Last Name. It should follow with capitalized first character of your last name.");
         ValidateRegisterField("emailAddress", /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,10}$/, "Please enter a valid Email Address.");
         ValidateRegisterField("password", /^([A-Za-z0-9]{6,})*$/, "Please enter a password which al least consist of 0-9, a-z, A-Z and at least 6 characters long.");
     }
@@ -454,14 +462,14 @@
 
         if(password != confirmPassword)
         {
-            error_message_register.html("Password are not same");
-        }
-        else
-        {
-            error_message_register.removeAttr("class").hide();
+            ErrorMessage.html("Password are not same");
         }
     }
 
+    /**
+     * Register function to print the value which are entered in the input fields
+     *
+     */
     function DisplayRegisterPage()
     {
         console.log("Register Page");
@@ -471,34 +479,23 @@
         registerElement.appendChild(registerId);
 
         RegisterFormValidation();
+        CheckPassword();
 
         
-
-        let registerButton = document.getElementById("registerButton");
-
-        // registerButton.addEventListener("click", function()
-        // {
-        //     AddRegister(firstName.value, lastName.value, emailAddress.value, password.value, confirmPassword.value);
-        // });
-
-        
-
-        registerButton.addEventListener("click", function()
+        let user = new core.User();
+        $("#registerButton").on("click", (event)=>
         {
-            event.preventDefault();
-            let success = false;
-            var user = new Class();
+            event.preventDefault(); //for debugging
 
-            user.FirstName = $("#FirstName").val();
+            user.FirstName = $("#firstName").val();
             user.LastName = $("#lastName").val();
             user.EmailAddress = $("#emailAddress").val();
-            user.Password = $("#password").val();
+            // user.Password = $("#password").val();
+            // user.EmailAddress = $("#confirmPassword").val();
 
-            localStorage.setItem(page, user.serialize());
+            localStorage.setItem("user", user.serialize());
 
-            document.getElementsByTagName("form").reset();
-            
-            
+            document.forms[0].reset();    
         });
     }
 

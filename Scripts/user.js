@@ -40,9 +40,9 @@
 
         serialize() 
         {
-            if (this.FirstName !== "" && this.LastName !== "" && this.EmailAddress !== "" && this.Username !== "") 
+            if (this.FirstName !== "" && this.LastName !== "" && this.EmailAddress !== "") 
             {
-                return `${this.FirstName},${this.LastName},${this.EmailAddress},${this.Username}`;
+                return `${this.FirstName},${this.LastName},${this.EmailAddress}`;
             }
             console.error("One or more properties of User Object are missing or maybe empty");
             return null;
