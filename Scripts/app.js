@@ -1,3 +1,8 @@
+// Name: Dhruv Patel
+// Student ID: 100800111
+// Date Completed: 27th February, 2022
+// Reference: https://stackoverflow.com/questions/14850553/javascript-regex-for-password-containing-at-least-8-characters-1-number-1-uppe
+
 // IIFE - Immediately Invoked Function Expression
 // AKA Anonymous Self-Executing Function
 (function()
@@ -492,6 +497,7 @@
             // user.Password = $("#password").val();
             // user.EmailAddress = $("#confirmPassword").val();
 
+            //to print inputs in localStorage
             localStorage.setItem("user", user.serialize());
 
             document.forms[0].reset();    
