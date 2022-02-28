@@ -45,6 +45,7 @@
         $("header").html(data); //data payload
         $(`li>a:contains(${document.title})`).addClass("active");   // add a class of 'active'
         CheckLogin();
+        UserNameNavbar();
     }
 
 
@@ -450,6 +451,15 @@
                 ErrorMessage.removeAttr("class").hide();
             }
         });
+    }
+
+    function UserNameNavbar()
+    {
+        if(sessionStorage.getItem("user"))
+        {
+            UserNavLink = sessionStorage.getItem("user").split(',')[0];
+            $("#userName").html(`${UserNavLink} - `);
+        }
     }
 
     function RegisterFormValidation()
