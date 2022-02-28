@@ -240,10 +240,7 @@
 
             contactList.innerHTML = data;
 
-            $("#addButton").on("click", () =>
-            {
-                location.href = "edit.html#add";
-            });
+            
 
             $("button.delete").on("click",function()
             {
@@ -260,6 +257,10 @@
                 location.href = "edit.html#" + $(this).val();
             });
         }
+        $("#addButton").on("click", () =>
+        {
+            location.href = "edit.html#add";
+        });
     }
 
     function DisplayEditPage()
@@ -417,9 +418,88 @@
         }
     }
 
+    function ValidateRegisterField(input_field, regular_expression_register, error_message_register)
+    {
+        let ErrorMessage = $("#ErrorMessage");
+        ErrorMessage.hide();
+
+        $("#" + input_field).on("blur", function()
+        {
+            let input_text_register = $(this).val();
+            if(!regular_expression_register.test(input_text_register))
+            {
+                $(this).trigger("focus").trigger("select");
+                ErrorMessage.addClass("alert alert-danger").text(error_message_register).show();
+
+            }
+            else
+            {
+                ErrorMessage.removeAttr("class").hide();
+            }
+        });
+    }
+
+    function RegisterFormValidation()
+    {
+        ValidateRegisterField("FirstName", /^([A-Z][a-z]{1,25})+(\s|,|-)*$/, "Please enter a valid First Name. It should follow with capitalized first character of your first name.");
+        ValidateRegisterField("lastName", /^([A-Z][a-z]{1,25})+(\s|,|-)*$/, "Please enter a valid Last Name. It should follow with capitalized first character of your last name.");
+        ValidateRegisterField("emailAddress", /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,10}$/, "Please enter a valid Email Address.");
+        ValidateRegisterField("password", /^([A-Za-z0-9]{6,})*$/, "Please enter a password which al least consist of 0-9, a-z, A-Z and at least 6 characters long.");
+    }
+
+    function CheckPassword()
+    {
+        var password = $("#password").val();
+        var confirmPassword = $("#confirmPassword").val();
+
+        if(password != confirmPassword)
+        {
+            error_message_register.html("Password are not same");
+        }
+        else
+        {
+            error_message_register.removeAttr("class").hide();
+        }
+    }
+
     function DisplayRegisterPage()
     {
         console.log("Register Page");
+        let registerElement = document.getElementById("contentArea");
+        let registerId = document.createElement("div");
+        registerId.setAttribute("id", "ErrorMessage");
+        registerElement.appendChild(registerId);
+
+        RegisterFormValidation();
+
+        
+
+        let registerButton = document.getElementById("registerButton");
+
+        // registerButton.addEventListener("click", function()
+        // {
+        //     AddRegister(firstName.value, lastName.value, emailAddress.value, password.value, confirmPassword.value);
+        // });
+
+        
+
+        registerButton.addEventListener("click", function()
+        {
+            event.preventDefault();
+            let success = false;
+            var user = new Class();
+
+            user.FirstName = $("#FirstName").val();
+            user.LastName = $("#lastName").val();
+            user.EmailAddress = $("#emailAddress").val();
+            user.Password = $("#password").val();
+
+            localStorage.setItem(page, user.serialize());
+
+            document.getElementsByTagName("form").reset();
+            
+            
+        });
     }
 
     // named function
