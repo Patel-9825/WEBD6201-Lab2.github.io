@@ -486,7 +486,6 @@
         $("#registerButton").on("click", (event)=>
         {
             event.preventDefault(); //for debugging
-
             user.FirstName = $("#firstName").val();
             user.LastName = $("#lastName").val();
             user.EmailAddress = $("#emailAddress").val();
